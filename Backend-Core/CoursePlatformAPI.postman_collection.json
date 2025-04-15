@@ -1,0 +1,382 @@
+{
+	"info": {
+		"_postman_id": "36222ea0-6316-432e-aaec-9f54766ed0a1",
+		"name": "Course Platform API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43165881"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Test Admin 1\",\n  \"email\": \"admin1@example.com\",\n  \"password\": \"password123\",\n  \"is_admin\":true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "Get All Courses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/courses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "programming",
+									"disabled": true
+								},
+								{
+									"key": "level",
+									"value": "beginner",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "python",
+									"disabled": true
+								},
+								{
+									"key": "enrolled",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"title\": \"Course Title\",\n        \"description\": \"Course Description\",\n        \"duration\": \"10h\",\n        \"category\": \"Programming\",\n        \"level\": \"beginner\",\n        \"image\": \"https://winatalent.com/blog/wp-content/uploads/2023/12/Best-Programming-Software-for-Writing-Code.jpg\",\n        \"sections\": [\n            {\n                \"id\": \"section1\",\n                \"title\": \"Section 1\",\n                \"duration\": \"1h\",\n                \"completed\": false,\n                \"modules\": [\n                    {\n                        \"id\": \"module1\",\n                        \"title\": \"Module 1\",\n                        \"type\": \"video\",\n                        \"duration\": \"30m\",\n                        \"completed\": false,\n                        \"questions\": 0,\n                        \"pages\": 0\n                    }\n                ]\n            }\n        ]\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/courses/:course_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								":course_id"
+							],
+							"variable": [
+								{
+									"key": "course_id",
+									"value": "67f15fcd8b47b89c5301596a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enroll in Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/courses/:course_id/enroll",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								":course_id",
+								"enroll"
+							],
+							"variable": [
+								{
+									"key": "course_id",
+									"value": "67f15fcd8b47b89c5301596a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Module Progress",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"completed\": true,\n  \"score\": 85\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/:course_id/modules/:module_id/progress",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								":course_id",
+								"modules",
+								":module_id",
+								"progress"
+							],
+							"variable": [
+								{
+									"key": "course_id",
+									"value": "67f15fcd8b47b89c5301596a"
+								},
+								{
+									"key": "module_id",
+									"value": "module1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Activity",
+			"item": [
+				{
+					"name": "Get User Activity",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/activity?start_date=2025-01-01T00:00:00Z&end_date=2025-05-31T23:59:59Z",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"activity"
+							],
+							"query": [
+								{
+									"key": "start_date",
+									"value": "2025-01-01T00:00:00Z"
+								},
+								{
+									"key": "end_date",
+									"value": "2025-05-31T23:59:59Z"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chat",
+			"item": [
+				{
+					"name": "Send Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"Can you explain the concept of inheritance in programming?\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/courses/:course_id/chat",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								":course_id",
+								"chat"
+							],
+							"variable": [
+								{
+									"key": "course_id",
+									"value": "67f15fcd8b47b89c5301596a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Chat History",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/courses/:course_id/chat",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"courses",
+								":course_id",
+								"chat"
+							],
+							"variable": [
+								{
+									"key": "course_id",
+									"value": "67f15fcd8b47b89c5301596a"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000"
+		},
+		{
+			"key": "token",
+			"value": "your_access_token_here"
+		},
+		{
+			"key": "course_id",
+			"value": "course_id_here"
+		},
+		{
+			"key": "module_id",
+			"value": "module_id_here"
+		}
+	]
+}
